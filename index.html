@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <title>Data Science Self-Assessment</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui.theme.css">
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+    <script src="js/jquery-ui.js"></script>
+
+    <script src="js/sections.js"></script>
+    <script src="js/assess.js"></script>
+    <style type='text/css'>
+        body {
+            background-color: #002;
+            color: #eee;
+            font-family: serif;
+        }
+        
+        #main {
+            margin-left: 1em;
+            margin-right: 1em;
+        }
+    </style>
+</head>
+
+<body onload='main()'>
+    <center><h1>Data Science Self-Assessment</h1></center>
+
+    <div id='instructions'>
+    <h3>Instructions for Completing the Data Science Self-Assessment</h3>
+    Thank you for participating in the Data Science Self-Assessment. The purpose of this self-assessment is to determine your proficiency levels in data science as a basis for professional development recommendations and to inform workforce readiness reporting. Please proceed to the "Self-Assessment" tab and complete each item in order by entering Yes or No. (Formats of Yes/yes/Y/y or No/no/N/n are all acceptable.) Each item asks whether you are able to perform a specified action. Please respond to each item based on your current or prior ability (i.e., answer “yes” if you have ever had the ability to perform the action). The items are grouped by each of the 7 Data Science technical competencies and are listed in sequential order. If you skip any items, you will be prompted to review your responses and complete any missed items. Please complete all items prior to submitting your responses. Note that data science is a diverse field in which different individuals have different strengths. Therefore, you should not expect to have a high level of proficiency in all seven competencies. Also note that your responses should be based solely on your abilities, so please respond based on what you are actually capable of doing (or were ever capable of doing).
+    <br/>
+    As a reminder, this assessment will not be used for any personnel decisions. It will only be used for your own professional development and to estimate workforce readiness. As such, we request that you do your best to reflect honestly on your abilities. Thank you!
+    </div>
+
+    <div id='results'>
+    </div>
+    
+    <div id='main'>
+
+        <form name='answers'>
+            <table class="table table-dark table-striped table-bordered table-hover">
+                <tbody id='questions'>
+                </tbody>
+            </table>
+            <input type='button' value='Generate Code' onclick='generateCode(this.form);' />
+            <input type='button' value='Load Code' onclick='var code = prompt("Answer Code"); if(code){populateFromCode(this.form, code);}' />
+        </form>
+        
+    </div>
+
+</body>
+</html>
