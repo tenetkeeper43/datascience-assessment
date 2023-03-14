@@ -7,14 +7,24 @@ function renderQuestions(ele) {
         html += (`<tr><th colspan=2 class='table-primary'>${section['competency']}</th></tr>`);
         html += (`<tr><th colspan=2 class='table-secondary' style='font-size: 8pt;'>${section['definition']}</th></tr>`);
         section['questions'].forEach( (q) => {
-            html += (`<tr><td><label for='q_${index}'>${q}</label></td><td><input type='checkbox' id='q_${index}' name='q_${index}' /></td></tr>`);
+            html += (`<tr><td id='q_${index}_td'><label for='q_${index}'>${q}</label></td><td style='white-space: nowrap;'>
+            <label for='q_${index}_yes'>Yes
+              <input type='radio' id='q_${index}_yes' name='q_${index}' value='1' />
+            </label>
+            <label for='q_${index}_no'>No
+              <input type='radio' id='q_${index}_no' name='q_${index}' value='0' />
+            </label>
+            </td></tr>`);
             index += 1;
         });
     });
     ele.innerHTML = html;
     total_questions = index;
 }
-   
+
+// all checked 83:////////////////f
+// none checked 54:AAAAAAAAAAAAAAAAA
+
 function main() {
     var ele = document.getElementById('questions');
     renderQuestions(ele);
@@ -111,7 +121,7 @@ function populateFromCode(form, code) {
 
 function setAnswers(form, binarray) {
     for (var index = 0; index < binarray.length; index++) {
-        form["q_"+index].checked = (binarray[index]==1);
+        form["q_"+index].value = ""+binarray[index];
     }
 }
 
@@ -119,7 +129,15 @@ function getAnswerBinaryArray(form) {
     var index = 0;
     var binarray = [];
     while(form["q_"+index]) {
-        binarray.push((form["q_"+index].checked) ? 1 : 0);
+        var ans = form["q_"+index].value;
+        if(ans == "") {
+          $("#q_"+index+"_td").css('border', 'thick solid red');
+          alert("You must complete all items");
+          return;
+        }
+        $("#q_"+index+"_td").css('border', '');
+        
+        binarray.push(parseInt(form["q_"+index].value));
         index += 1;
     }
     return binarray;
