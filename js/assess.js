@@ -7,14 +7,19 @@ function renderQuestions(ele) {
         html += (`<tr><th colspan=2 class='table-primary'>${section['competency']}</th></tr>`);
         html += (`<tr><th colspan=2 class='table-secondary' style='font-size: 8pt;'>${section['definition']}</th></tr>`);
         section['questions'].forEach( (q) => {
-            html += (`<tr><td id='q_${index}_td'><label for='q_${index}'>${q}</label></td><td style='white-space: nowrap;'>
+            html += "<tr>";
+            // render radio buttons
+            html += `<td style='white-space: nowrap;'>
             <label for='q_${index}_yes'>Yes
               <input type='radio' id='q_${index}_yes' name='q_${index}' value='1' />
             </label>
             <label for='q_${index}_no'>No
               <input type='radio' id='q_${index}_no' name='q_${index}' value='0' />
             </label>
-            </td></tr>`);
+            </td>`;
+            // render question
+            html += `<td id='q_${index}_td'><label for='q_${index}'>${q}</label></td>`;
+            html += "</tr>";
             index += 1;
         });
     });
