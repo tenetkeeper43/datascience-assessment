@@ -18,13 +18,25 @@ function renderQuestions(ele) {
             </label>
             </td>`;
             // render question
-            html += `<td id='q_${index}_td'><label for='q_${index}'>${q}</label></td>`;
+            html += `<td id='q_${index}_td' onclick='toggle(${index});'>${q}</td>`;
             html += "</tr>";
             index += 1;
         });
     });
     ele.innerHTML = html;
     total_questions = index;
+}
+
+function toggle(index, form) {
+    form = form || document.forms.answers;
+    var cur = form["q_"+index].value;
+    if(cur == "") {
+      form["q_"+index].value = '1';
+    } else if(cur == '1') {
+      form["q_"+index].value = '0';
+    } else if(cur == '0') {
+      form["q_"+index].value = '1';
+    }
 }
 
 // all checked 83:////////////////f
