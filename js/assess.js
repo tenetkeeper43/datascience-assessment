@@ -56,7 +56,7 @@ function main() {
         title: "Results",
         autoOpen: false,
         width: 800,
-        height: 300,
+        height: 600,
         model: true
     });
     //$("#instructions").dialog("open");
@@ -116,11 +116,14 @@ function generateCode(form) {
     var b64 = binArrayToBase64(binarray);
     var crc = (crc32(b64) % 256).toString(16).toUpperCase();
     var answer_code = crc+":"+b64;
-    var html = calculateCompetency(form);
-    html += ("Your answer code is \""+answer_code+"\". It is copied to your clipboard. Please submit it and your token to the specified URL.");
+    $("#answer_code").html(answer_code);
+    
+    var comps = calculateCompetencies(form);
+    Object.keys(comps).forEach( (c) => {
+      $("#"+c+"_level").html(comps[c]);
+    });
     navigator.clipboard.writeText(answer_code);
-    $("#results").html(html);
-    $("#results").dialog( "open" );   
+    $("#results").dialog( "open" );
 }
 
 function populateFromCode(form, code) {
@@ -160,9 +163,9 @@ function getAnswerBinaryArray(form) {
     return binarray;
 }
 
-function calculateCompetency(form) {
+function calculateCompetencies(form) {
     var binarray = getAnswerBinaryArray(form);
-    var html = "<table>";
+    var comps = {};
     var lvl_names = ["None", "Basic", "Intermediate", "Advanced", "Master"];
     
     sections.forEach( (section) => {
@@ -181,7 +184,7 @@ function calculateCompetency(form) {
                 lvl = i+1;
             }
         });
-        html += `<tr><th>${section["short"]}</th><td>${lvl_names[lvl]}<td></tr>`;
+        comps[section["short"]] = lvl_names[lvl];
     });
-    return html + "</table>";
+    return comps;
 }
