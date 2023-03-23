@@ -166,7 +166,7 @@ function getAnswerBinaryArray(form) {
 function calculateCompetencies(form) {
     var binarray = getAnswerBinaryArray(form);
     var comps = {};
-    var lvl_names = ["None", "Basic", "Intermediate", "Advanced", "Master"];
+    var lvl_names = ["No/Low Proficiency", "Basic", "Intermediate", "Advanced", "Master"];
     
     sections.forEach( (section) => {
         var lvl = 0;
@@ -184,7 +184,7 @@ function calculateCompetencies(form) {
                 lvl = i+1;
             }
         });
-        comps[section["short"]] = lvl_names[lvl];
+        comps[section["short"]] = (lvl)+" - "+lvl_names[lvl]+" Proficiency";
     });
     return comps;
 }
