@@ -1,5 +1,7 @@
 var total_questions = 0;
 
+var start_time = undefined;
+
 function renderQuestions(ele) {
     var index = 0;
     var html = "";
@@ -36,6 +38,9 @@ function toggle(index, form) {
       form["q_"+index].value = '0';
     } else if(cur == '0') {
       form["q_"+index].value = '1';
+    }
+    if( start_time == undefined ) {
+      start_time = new Date();
     }
 }
 
@@ -123,6 +128,9 @@ function generateCode(form) {
       $("#"+c+"_level").html(comps[c]);
     });
     navigator.clipboard.writeText(answer_code);
+    var now = new Date();
+    var minutes = Math.round((now - start_time)/60000);
+    $("#time_took").html( minutes );
     $("#results").dialog( "open" );
 }
 
@@ -137,6 +145,7 @@ function populateFromCode(form, code) {
     
     var binarray = base64ToBinArray(b64, total_questions);
     setAnswers(form, binarray);
+    start_time = new Date();
 }
 
 function setAnswers(form, binarray) {
