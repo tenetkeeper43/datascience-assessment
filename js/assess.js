@@ -8,8 +8,10 @@ const checkbox = document.getElementById('checkbox');
 checkbox.addEventListener('change', ()=>{
     var theme = 'dark';
     var current_theme = document.documentElement.getAttribute('data-bs-theme');
+    $("#clipboard_icon").css('filter', 'invert(100%)');
     if(current_theme == 'dark') {
         theme = 'light';
+        $("#clipboard_icon").css('filter', 'invert(0%)');
     }
     document.documentElement.setAttribute('data-bs-theme', theme);    
 })

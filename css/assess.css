@@ -6,7 +6,10 @@
     top: 10px;
     right: 19px;
 }
-
+body {
+    margin-left: 1em;
+    margin-right: 1em;
+}
 
 .checkbox {
   opacity: 0;
