@@ -1,6 +1,6 @@
 var total_questions = 0;
 
-var start_time = undefined;
+var start_time = new Date();
 var current_section = 0;
 
 const checkbox = document.getElementById('checkbox');
@@ -94,9 +94,6 @@ function toggle(index, form) {
       form["q_"+index].value = '0';
     } else if(cur == '0') {
       form["q_"+index].value = '1';
-    }
-    if( start_time == undefined ) {
-      start_time = new Date();
     }
 }
 
@@ -237,7 +234,6 @@ function calculateCompetencies(form) {
     return comps;
 }
 
-populateFromCode(document.forms['answers'], "83:////////////////f");
 // all checked 83:////////////////f
 // none checked 54:AAAAAAAAAAAAAAAAA
 
