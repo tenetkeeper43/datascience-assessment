@@ -1,13 +1,35 @@
 var total_questions = 0;
 
 var start_time = undefined;
+var current_section = 0;
+
+const checkbox = document.getElementById('checkbox');
+
+checkbox.addEventListener('change', ()=>{
+    var theme = 'dark';
+    var current_theme = document.documentElement.getAttribute('data-bs-theme');
+    if(current_theme == 'dark') {
+        theme = 'light';
+    }
+    document.documentElement.setAttribute('data-bs-theme', theme);    
+})
 
 function renderQuestions(ele) {
-    var index = 0;
+    var index = 0; //question index
     var html = "";
+    var display = "none";
+    var sectionNumber = 1; //0 is for instructions
+
     sections.forEach( (section) => {
-        html += (`<tr><th colspan=2 class='table-primary'>${section['competency']}</th></tr>`);
-        html += (`<tr><th colspan=2 class='table-secondary' style='font-size: 8pt;'>${section['definition']}</th></tr>`);
+        $("#results_button").before(
+        `<li class="page-item"><a class="page-link" href="#" onclick='show(${sectionNumber});'>${section['short']}</a></li>`);
+
+        html += `<table id="section_${sectionNumber}" class="table table-striped table-bordered table-hover" style="display: ${display}">
+            <tr><th colspan=2 class='table-primary'>${section['competency']}</th></tr>
+            <tr><th colspan=2 class='table-secondary'>${section['definition']}</th></tr>`;
+
+        sectionNumber += 1;
+            
         section['questions'].forEach( (q) => {
             html += "<tr>";
             // render radio buttons
@@ -24,9 +46,41 @@ function renderQuestions(ele) {
             html += "</tr>";
             index += 1;
         });
+
+        html += "</table>";
     });
     ele.innerHTML = html;
     total_questions = index;
+}
+
+function show(sectionNumber) {
+    if(sectionNumber == current_section) {return;}
+    $("#section_"+current_section).hide("drop");
+    current_section = sectionNumber;
+
+    var items = $("li.page-item");
+    items.each( (i, ele) => {
+        ele.style.fontWeight = (i > 0 && i < sectionNumber + 1) ? 'bold' : '';
+    });
+
+    setTimeout(() => $("#section_"+sectionNumber).show(), 500);
+}
+
+function prev() {
+    if(current_section == 0) { return; }
+    show(current_section - 1);
+}
+
+function next() {
+    if(current_section == sections.length+1) { return; }
+    if(current_section == sections.length) { showResults(); return;}
+    show(current_section + 1);
+}
+
+function showResults() {
+    var f = document.forms.answers;
+    generateCode(f);
+    show(sections.length+1);
 }
 
 function toggle(index, form) {
@@ -44,27 +98,9 @@ function toggle(index, form) {
     }
 }
 
-// all checked 83:////////////////f
-// none checked 54:AAAAAAAAAAAAAAAAA
-
 function main() {
     var ele = document.getElementById('questions');
     renderQuestions(ele);
-    $("#instructions").dialog({
-        title: "Instructions",
-        autoOpen: true,
-        width: 800,
-        height: 800,
-        model: true
-    });
-    $("#results").dialog({
-        title: "Results",
-        autoOpen: false,
-        width: 800,
-        height: 600,
-        model: true
-    });
-    //$("#instructions").dialog("open");
 }
 
 var makeCRCTable = function(){
@@ -98,11 +134,11 @@ function binArrayToBase64(binarray) {
     while (binarray.length >= 6) {
         var i = parseInt(binarray.slice(0,6).reverse().join(""),2);
         binarray = binarray.slice(6, 10000);
-        b64 += b64t.substr(i,1);
+        b64 += b64t.substring(i,i+1);
     }
     if (binarray.length > 0) {
       var i = parseInt(binarray.reverse().join(""),2);
-      b64 += b64t.substr(i,1);
+      b64 += b64t.substring(i,i+1);
     }
     return b64;
 }
@@ -120,7 +156,9 @@ function generateCode(form) {
     var binarray = getAnswerBinaryArray(form);
     var b64 = binArrayToBase64(binarray);
     var crc = (crc32(b64) % 256).toString(16).toUpperCase();
-    var answer_code = crc+":"+b64;
+    var now = new Date();
+    var minutes = Math.round((now - start_time)/60000);
+    var answer_code = crc+":"+b64+":"+minutes;
     $("#answer_code").html(answer_code);
     
     var comps = calculateCompetencies(form);
@@ -128,8 +166,6 @@ function generateCode(form) {
       $("#"+c+"_level").html(comps[c]);
     });
     navigator.clipboard.writeText(answer_code);
-    var now = new Date();
-    var minutes = Math.round((now - start_time)/60000);
     $("#time_took").html( minutes );
     $("#results").dialog( "open" );
 }
@@ -137,6 +173,7 @@ function generateCode(form) {
 function populateFromCode(form, code) {
     var crc = code.split(":")[0];
     var b64 = code.split(":")[1];
+    var minutes = parseInt(code.split(":")[2] || "0");
     var crc_check = (crc32(b64) % 256).toString(16).toUpperCase();
     if(crc != crc_check) {
         alert("CRC didn't match.  Code is invalid.");
@@ -175,7 +212,7 @@ function getAnswerBinaryArray(form) {
 function calculateCompetencies(form) {
     var binarray = getAnswerBinaryArray(form);
     var comps = {};
-    var lvl_names = ["No/Low Proficiency", "Basic", "Intermediate", "Advanced", "Master"];
+    var lvl_names = ["No/Low", "Basic", "Intermediate", "Advanced", "Master"];
     
     sections.forEach( (section) => {
         var lvl = 0;
@@ -197,3 +234,8 @@ function calculateCompetencies(form) {
     });
     return comps;
 }
+
+populateFromCode(document.forms['answers'], "83:////////////////f");
+// all checked 83:////////////////f
+// none checked 54:AAAAAAAAAAAAAAAAA
+

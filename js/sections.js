@@ -1,7 +1,7 @@
 var sections = [
     {
        "competency":"Computational Foundations of Data Science",
-       "short": "comp",
+       "short": "Computational",
        "definition":"Designs and writes software that collects, transforms, manages, analyzes, and/or models data.",
        "vector": [4,6,5,4],
        "questions": [
@@ -28,7 +28,7 @@ var sections = [
     },
     {
        "competency":"Cross-Disciplinary Data Science Collaboration",
-       "short": "collab",
+       "short": "Collaboration",
        "definition":"Partners with domain experts to acquire and apply needed domain knowledge, approximate mission problems with data science questions, and translate data science solutions into mission solutions.",
        "vector": [2,4,3,4],
        "questions": [
@@ -49,7 +49,7 @@ var sections = [
     },
     {
        "competency":"Data Engineering for Data Science",
-       "short": "data",
+       "short": "DataEngineering",
        "definition":"Moves, loads, and handles data of varying quality and structure to achieve project outcomes. Applies general data engineering practices, processes, and platforms to field solutions in a defensible, repeatable, and compliant fashion.",
        "vector": [3,3,3,3], //assumed
        "questions": [
@@ -69,7 +69,7 @@ var sections = [
     },
     {
        "competency":"Data Science/Artificial Intelligence Governance and Ethics",
-       "short": "ethics",
+       "short": "Ethics",
        "definition":"Guides the successful application of data science and artificial intelligence to mission, while integrating ethical considerations and mitigating legal, privacy, security, and mission risks throughout the project life cycle.",
        "vector": [3,3,3,3],
        "questions": [
@@ -89,7 +89,7 @@ var sections = [
     },
     {
        "competency":"Mathematical Foundations of Data Science",
-       "short": "maths",
+       "short": "Mathematical",
        "definition":"Applies knowledge and problem-solving ability in mathematical underpinnings of data science, including linear algebra, probability theory, and optimization.",
        "vector": [4,5,4,3],
        "questions": [
@@ -113,7 +113,7 @@ var sections = [
     },
     {
        "competency":"Scientific Data Analysis",
-       "short": "science",
+       "short": "Scientific",
        "definition":"Conducts and reports exploratory, confirmatory, and predictive data analyses.",
        "vector": [4,5,3,4],
        "questions": [
@@ -137,7 +137,7 @@ var sections = [
     },
     {
        "competency":"Statistical Foundations of Data Science",
-       "short": "stats",
+       "short": "Statistical",
        "definition":"Applies principles of building and assessing statistical models.",
        "vector": [3,4,3,3],
        "questions": [

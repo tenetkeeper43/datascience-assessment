@@ -1,24 +1,20 @@
 <!doctype html>
-<html>
+<html lang="en" data-bs-theme="light">
 <head>
     <title>Data Science Self-Assessment</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/jquery-ui.theme.css">
+    <link rel="stylesheet" href="css/assess.css">
 
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery-3.6.0.js"></script>
     <script src="js/jquery-ui.js"></script>
 
     <script src="js/sections.js"></script>
-    <script src="js/assess.js"></script>
+    <script src="js/assess.js" defer></script>
     <style type='text/css'>
-        body {
-            background-color: #002;
-            color: #eee;
-            font-family: serif;
-        }
-        
         #main {
             margin-left: 1em;
             margin-right: 1em;
@@ -31,18 +27,21 @@
 </head>
 
 <body onload='main()'>
+
+  <div id="color_mode">
+    <input type="checkbox" class="checkbox" id="checkbox" />
+    <label for="checkbox" class="label">
+      <i class="fas fa-moon"></i>
+      <i class='fas fa-sun'></i>
+      <div class='ball'></div>
+    </label>
+  </div>
+
     <center><h1>Data Science Self-Assessment</h1></center>
 
-    <div id='instructions'>
-    <h3>Instructions for Completing the Data Science Self-Assessment</h3>
-    Thank you for participating in the Data Science Self-Assessment! The purpose of this self-assessment is to determine your proficiency levels in data science competencies as a basis for professional development recommendations and to inform workforce readiness reporting. After reading these instructions, please proceed to the self-assessment by clicking on the box in the top right-hand corner of this window. Then, complete each item in order by selecting the appropriate Yes or No radio button. Each item asks whether you are able to perform a specified action. Please select "yes" if you are now able to perform the action, or if you previously had that ability and could regain it with no more than 40 hours of study or training. Otherwise, please select "no." The items are grouped by each of the seven Data Science technical competencies and are listed in sequential order. If you skip any items, you will be prompted to review your responses and complete any missed items. Please complete all items prior to submitting your responses.
-    <br/>
-    Note that data science is a diverse field in which different individuals have different strengths. Therefore, you should not expect to have a high level of proficiency in all seven competencies. Also note that your responses should be based solely on your abilities, so please respond based on what you are actually capable of doing (or were ever capable of doing). As a reminder, this assessment will not be used for any personnel decisions. It will only be used for your own professional development and to estimate workforce readiness. As such, we request that you do your best to reflect honestly on your abilities and experience.
-    <br/>
-    After you have completed all items, select the “View Your Results” button at the bottom of the assessment, and your assessed proficiency levels will be displayed. Then, please submit your results by copying the displayed “Answer Code” and following the instructions provided. Your submitted results will be kept confidential and will only be used for aggregate workforce readiness reporting and for evaluating the assessment. Thank you!
-    </div>
 
-    <div id='results'>
+
+    <div id='section_8' style="display: none;">
       <table style='border: thin solid black;'>
         <thead>
           <tr>
@@ -53,36 +52,36 @@
         <tbody>
           <tr>
             <td>Computational Foundations of Data Science</td>
-            <td id='comp_level'></td>
+            <td id='Computational_level'></td>
           </tr>
           <tr>
             <td>Cross-Disciplinary Data Science Collaboration</td>
-            <td id='collab_level'></td>
+            <td id='Collaboration_level'></td>
           </tr>
 
           <tr>
             <td>Data Engineering for Data Science</td>
-            <td id='data_level'></td>
+            <td id='DataEngineering_level'></td>
           </tr>
 
           <tr>
             <td>Data Science/AI Governance and Ethics</td>
-            <td id='ethics_level'></td>
+            <td id='Ethics_level'></td>
           </tr>
 
           <tr>
             <td>Mathematical Foundations of Data Science</td>
-            <td id='maths_level'></td>
+            <td id='Mathematical_level'></td>
           </tr>
 
           <tr>
             <td>Scientific Data Analysis</td>
-            <td id='science_level'></td>
+            <td id='Scientific_level'></td>
           </tr>
 
           <tr>
             <td>Statistical Foundations of Data Science</td>
-            <td id='stats_level'></td>
+            <td id='Statistical_level'></td>
           </tr>
         </tbody>
       </table>
@@ -105,15 +104,39 @@
     <div id='main'>
 
         <form name='answers'>
-            <table class="table table-dark table-striped table-bordered table-hover">
-                <tbody id='questions'>
-                </tbody>
-            </table>
-            <input type='button' value='View Your Results' onclick='generateCode(this.form);' />
-            <input style='display:none' accesskey='l' type='button' value='Load Answer Code' onclick='var code = prompt("Answer Code"); if(code){populateFromCode(this.form, code);}' />
+          <div id="questions">
+
+          </div>
+          <input style='display:none' accesskey='l' type='button' value='Load Answer Code' onclick='var code = prompt("Answer Code"); if(code){populateFromCode(this.form, code);}' />
         </form>
+
+        <div id='section_0'>
+          <h3>Instructions for Completing the Data Science Self-Assessment</h3>
+          Thank you for participating in the Data Science Self-Assessment! The purpose of this self-assessment is to determine your proficiency levels in data science competencies as a basis for professional development recommendations and to inform workforce readiness reporting. After reading these instructions, please proceed to the self-assessment by clicking on the box in the top right-hand corner of this window. Then, complete each item in order by selecting the appropriate Yes or No radio button. Each item asks whether you are able to perform a specified action. Please select "yes" if you are now able to perform the action, or if you previously had that ability and could regain it with no more than 40 hours of study or training. Otherwise, please select "no." The items are grouped by each of the seven Data Science technical competencies and are listed in sequential order. If you skip any items, you will be prompted to review your responses and complete any missed items. Please complete all items prior to submitting your responses.
+          <br/>
+          Note that data science is a diverse field in which different individuals have different strengths. Therefore, you should not expect to have a high level of proficiency in all seven competencies. Also note that your responses should be based solely on your abilities, so please respond based on what you are actually capable of doing (or were ever capable of doing). As a reminder, this assessment will not be used for any personnel decisions. It will only be used for your own professional development and to estimate workforce readiness. As such, we request that you do your best to reflect honestly on your abilities and experience.
+          <br/>
+          After you have completed all items, select the “View Your Results” button at the bottom of the assessment, and your assessed proficiency levels will be displayed. Then, please submit your results by copying the displayed “Answer Code” and following the instructions provided. Your submitted results will be kept confidential and will only be used for aggregate workforce readiness reporting and for evaluating the assessment. Thank you!
+        </div>
         
-    </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" onclick="prev();">Previous</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#" onclick="show(0)">Instructions</a>
+            </li>
+            <li class="page-item" id="results_button">
+              <a class="page-link" href="#" onclick="showResults()">Results</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#" onclick="next();">Next</a>
+            </li>
+          </ul>
+        </nav>
+      
+      </div>
 
 </body>
 </html>
