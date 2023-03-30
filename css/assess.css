@@ -60,9 +60,9 @@ body {
 @font-face {
     font-family:"Font Awesome 5 Free";
     font-style:normal;
-    font-weight:400;
+    font-weight:900;
     font-display:block;
-    src: url(fa-regular-400.woff2) format("woff2");
+    src: url(fa-solid-900.woff2) format("woff2");
 }
 
 .fas {
