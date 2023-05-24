@@ -238,43 +238,48 @@ function calculateCompetenciesFromBinArray(binarray) {
     return comps;
 }
 
-function decode(codes_blob, result_div) {
-  var html = "<table><thead><tr><th>Code</th>";
+function decode(codes_blob) {
+  var csv = "Code,Minutes";
   sections.forEach( (section) => {
-      html += "<th>"+section["short"]+"</th>";
+      csv += ","+section["short"];
   });
+  
   total_questions = 101;
   var q = 1;
   while(q <= total_questions) {
-    html += "<th>Q"+q+"</th>";
+    csv += ",Q"+q;
     q += 1;
   }
-  html += "</tr></thead><tbody>";
+  csv += "\n";
+  
   var codes = codes_blob.split("\n");
   codes.forEach( (code) => {
-    html += "<tr><td>"+code+"</td>";
+    if( code.length < 10 ) { return; }
+    
+    csv += code;
     var crc = code.split(":")[0];
     var b64 = code.split(":")[1];
     var minutes = parseInt(code.split(":")[2] || "0");
     var crc_check = (crc32(b64) % 256).toString(16).toUpperCase();
     if(crc != crc_check) {
-        html += "<td>invalid</td>";
-    } else {
-        var binarray = base64ToBinArray(b64, total_questions);
-        var comps = calculateCompetenciesFromBinArray(binarray);
-        console.log(comps);
-        sections.forEach( (section) => {
-            console.log(section["short"]);
-            var lvl = comps[section["short"]].split(' ')[0];
-            html += "<td>"+lvl+"</td>";
-        });
+        csv += ",crc invalid\n";
+        return;
     }
-    html += "<td>"+binarray.join("</td><td>")+"</td>";
-    html += "</tr>";
+    csv += ","+minutes;
+    
+    var binarray = base64ToBinArray(b64, total_questions);
+    var comps = calculateCompetenciesFromBinArray(binarray);
+
+    sections.forEach( (section) => {
+        var lvl = comps[section["short"]].split(' ')[0];
+        csv += ","+lvl;
+    });
+    csv += ","+binarray.join(",")+"\n";
   });
-  html += "</tbody></table>";
-  result_div.innerHTML = html;
+  navigator.clipboard.writeText(csv);
+  alert("CSV copied to clipboard.");
 }
 
 // all checked 83:////////////////f
 // none checked 54:AAAAAAAAAAAAAAAAA
+
