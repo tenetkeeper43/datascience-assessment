@@ -41,11 +41,9 @@
 
     <form name='decode_form'>
     <textarea name='codes' placeholder="Paste codes here. One per line." rows='20' cols='31'></textarea>
-    <input type='button' value='decode' onclick='decode(this.form.codes.value, document.getElementById("decoded_div"));' />
+    <br/>
+    <input type='button' value='decode' onclick='decode(this.form.codes.value);' />
     </form>
-    
-    <div id='decoded_div'>
-    </div>
 
 </body>
 </html>
