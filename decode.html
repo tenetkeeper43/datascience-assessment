@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <title>Data Science Self-Assessment</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui.theme.css">
+    <link rel="stylesheet" href="css/assess.css">
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+    <script src="js/jquery-ui.js"></script>
+
+    <script src="js/sections.js"></script>
+    <script src="js/assess.js" defer></script>
+    <style type='text/css'>
+        #main {
+            margin-left: 1em;
+            margin-right: 1em;
+        }
+        #answer_code {
+            color: #99f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+  <div id="color_mode">
+    <input type="checkbox" class="checkbox" id="checkbox" />
+    <label for="checkbox" class="label">
+      <i class="fas fa-moon"></i>
+      <i class='fas fa-sun'></i>
+      <div class='ball'></div>
+    </label>
+  </div>
+
+    <center><h1>Data Science Self-Assessment Decoder</h1></center>
+
+    <form name='decode_form'>
+    <textarea name='codes' placeholder="Paste codes here. One per line." rows='20' cols='31'></textarea>
+    <input type='button' value='decode' onclick='decode(this.form.codes.value, document.getElementById("decoded_div"));' />
+    </form>
+    
+    <div id='decoded_div'>
+    </div>
+
+</body>
+</html>
