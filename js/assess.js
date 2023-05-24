@@ -210,6 +210,10 @@ function getAnswerBinaryArray(form) {
 
 function calculateCompetencies(form) {
     var binarray = getAnswerBinaryArray(form);
+    return calculateCompetenciesFromBinArray(binarray);
+}
+
+function calculateCompetenciesFromBinArray(binarray) {
     var comps = {};
     var lvl_names = ["No/Low", "Basic", "Intermediate", "Advanced", "Master"];
     
@@ -234,6 +238,43 @@ function calculateCompetencies(form) {
     return comps;
 }
 
+function decode(codes_blob, result_div) {
+  var html = "<table><thead><tr><th>Code</th>";
+  sections.forEach( (section) => {
+      html += "<th>"+section["short"]+"</th>";
+  });
+  total_questions = 101;
+  var q = 1;
+  while(q <= total_questions) {
+    html += "<th>Q"+q+"</th>";
+    q += 1;
+  }
+  html += "</tr></thead><tbody>";
+  var codes = codes_blob.split("\n");
+  codes.forEach( (code) => {
+    html += "<tr><td>"+code+"</td>";
+    var crc = code.split(":")[0];
+    var b64 = code.split(":")[1];
+    var minutes = parseInt(code.split(":")[2] || "0");
+    var crc_check = (crc32(b64) % 256).toString(16).toUpperCase();
+    if(crc != crc_check) {
+        html += "<td>invalid</td>";
+    } else {
+        var binarray = base64ToBinArray(b64, total_questions);
+        var comps = calculateCompetenciesFromBinArray(binarray);
+        console.log(comps);
+        sections.forEach( (section) => {
+            console.log(section["short"]);
+            var lvl = comps[section["short"]].split(' ')[0];
+            html += "<td>"+lvl+"</td>";
+        });
+    }
+    html += "<td>"+binarray.join("</td><td>")+"</td>";
+    html += "</tr>";
+  });
+  html += "</tbody></table>";
+  result_div.innerHTML = html;
+}
+
 // all checked 83:////////////////f
 // none checked 54:AAAAAAAAAAAAAAAAA
-
